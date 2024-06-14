@@ -4,7 +4,11 @@ export const runtime = "edge";
 
 async function Home() {
 
-  const res = await fetch("https://demo-cloudflare-4gi.pages.dev/api");
+  if (process.env.BASE_URL === undefined) {
+    throw new Error("Missing BASE_URL environment variable");
+  }
+
+  const res = await fetch(`${process.env.BASE_URL}/api`);
   const data = await res.json();
 
   return (
